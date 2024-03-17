@@ -24,6 +24,7 @@ export class AppController {
     @Query('startDate') startDate: string,
     @Query('endDate') endDate: string,
   ): Promise<UserAggregate> {
+    // TODO: handle exception here.
     const { parsedStartDate, parsedEndDate } = this.validateStardAndEndDate(
       startDate,
       endDate,
@@ -47,6 +48,7 @@ export class AppController {
     @Query('startDate') startDate: string,
     @Query('endDate') endDate: string,
   ): Promise<Array<Payout>> {
+    // TODO: handle exception here.
     const { parsedStartDate, parsedEndDate } = this.validateStardAndEndDate(
       startDate,
       endDate,

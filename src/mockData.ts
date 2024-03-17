@@ -300,8 +300,8 @@ export const mockTransactionResponse: TransactionApiResponse = {
   meta: {
     totalItems: 1200,
     itemCount: 3,
-    itemsPerPage: 3,
-    totalPages: 400,
+    itemsPerPage: 1000,
+    totalPages: 1,
     currentPage: 1,
   },
 };
