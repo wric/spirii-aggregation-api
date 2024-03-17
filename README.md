@@ -66,7 +66,7 @@ Response:
 
 - Can't increas page size to higher than 3
 - "Task 1: Get aggregated data by user Id: balance, earned, spent, payout, paid out" assuming "payout" and "paid out" is one.
+- Task 2: as a first step I'm assuming that the entire liste is expected in response. Not paged.
+- Task 2: assuming that the number of payouts is not requested in the response
 
 ## TODO/Future improvements
-
--

@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { UserAggregate } from 'types/UserAggregate';
-import { TransactionApiResponse } from 'types/TransactionApi';
+import { Transaction, TransactionApiResponse } from 'types/TransactionApi';
+import { Payout } from 'types/Payout';
 
 @Injectable()
 export class AppService {
@@ -41,6 +42,34 @@ export class AppService {
     }
 
     return aggregate;
+  }
+
+  async getPayout(): Promise<Array<Payout>> {
+    const transactions = await this.getTransactions();
+    const userPayouts: { [userId: string]: number } = {};
+
+    for (const transaction of transactions) {
+      if (transaction.type !== 'payout') {
+        continue;
+      }
+
+      if (typeof userPayouts[transaction.userId] !== 'string') {
+        userPayouts[transaction.userId] = transaction.amount;
+      } else {
+        userPayouts[transaction.userId] += transaction.amount;
+      }
+    }
+
+    const payouts = Object.entries(userPayouts).map(([userId, payout]) => {
+      return { userId, payout };
+    });
+
+    return payouts;
+  }
+
+  async getTransactions(): Promise<Array<Transaction>> {
+    const transactionApiResponse = mockResUsers;
+    return transactionApiResponse.items;
   }
 }
 

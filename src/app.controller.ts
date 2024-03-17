@@ -1,6 +1,7 @@
 import { Controller, Get, Param } from '@nestjs/common';
 import { AppService } from './app.service';
 import { UserAggregate } from 'types/UserAggregate';
+import { Payout } from 'types/Payout';
 
 @Controller()
 export class AppController {
@@ -14,5 +15,10 @@ export class AppController {
   @Get('/users/:userId')
   getUserAggregate(@Param('userId') userId: string): UserAggregate {
     return this.appService.getUserAggregate(userId);
+  }
+
+  @Get('/payouts')
+  async getPayouts(): Promise<Array<Payout>> {
+    return this.appService.getPayout();
   }
 }
