@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Controller,
   Get,
   NotFoundException,
@@ -66,18 +67,18 @@ export class AppController {
     try {
       parsedStartDate = new Date(startDate);
     } catch {
-      throw Error('invalid startDate');
+      throw new BadRequestException('invalid startDate');
     }
 
     let parsedEndDate: Date;
     try {
       parsedEndDate = new Date(endDate);
     } catch {
-      throw Error('invalid endDate');
+      throw new BadRequestException('invalid endDate');
     }
 
     if (parsedStartDate >= parsedEndDate) {
-      throw Error('endDate must be after startDate');
+      throw new BadRequestException('endDate must be after startDate');
     }
 
     return { parsedStartDate, parsedEndDate };
