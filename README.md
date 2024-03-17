@@ -3,20 +3,22 @@
 To run:
 
 `npm install`
+
 `npm run start:dev`
 
 Test with:
 
 `http://localhost:3000/api/v1/users/074092?startDate=2023-03-01&endDate=2023-03-31`
+
 `http://localhost:3000/api/v1/payouts?startDate=2023-03-01&endDate=2023-03-31`
 
 Known limitations:
 
 - Error handling with proper error messages and status codes are not implemented.
 - The mocked Transaction API doesn't work (pagination, bad mock data, etc)
-- Throttle 5 req/min was not finnished (plan was to use p-throttle).
-- Cache to handle all request (max 2 min old data) is not implemented.
-- Tests are broken
+- Throttle 5 req/min was not finnished (plan was to use [p-throttle](https://www.npmjs.com/package/p-throttle) that I have used previously with success).
+- Cache to handle all request (max 2 min old data) is not implemented. Plan was to use p-throttle similar [p-memoize](https://github.com/sindresorhus/p-memoize), due to similarity in api.
+- Tests are broken.
 
 ## Goals
 
