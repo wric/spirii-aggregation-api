@@ -13,8 +13,10 @@ export class AppController {
   }
 
   @Get('/api/v1/users/:userId')
-  getUserAggregate(@Param('userId') userId: string): UserAggregate {
-    const userAggregate = this.appService.getUserAggregateById(userId);
+  async getUserAggregate(
+    @Param('userId') userId: string,
+  ): Promise<UserAggregate> {
+    const userAggregate = await this.appService.getUserAggregateById(userId);
     if (userAggregate.userId === null) {
       throw new NotFoundException(`User ${userId} not found`);
     }

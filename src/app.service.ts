@@ -9,8 +9,9 @@ export class AppService {
     return 'Hello World!';
   }
 
-  getUserAggregateById(userId: string): UserAggregate {
-    let aggregate: UserAggregate = {
+  async getUserAggregateById(userId: string): Promise<UserAggregate> {
+    const transactions = await this.getTransactions();
+    const aggregate: UserAggregate = {
       userId: null,
       balance: 0,
       earned: 0,
@@ -19,7 +20,7 @@ export class AppService {
     };
 
     // TODO: improve perf with with index of array
-    for (const transaction of mockResUsers.items) {
+    for (const transaction of transactions) {
       if (transaction.userId !== userId) {
         continue;
       }
