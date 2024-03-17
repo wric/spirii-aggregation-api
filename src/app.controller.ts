@@ -12,12 +12,12 @@ export class AppController {
     return this.appService.getHello();
   }
 
-  @Get('/users/:userId')
+  @Get('/api/v1/users/:userId')
   getUserAggregate(@Param('userId') userId: string): UserAggregate {
     return this.appService.getUserAggregate(userId);
   }
 
-  @Get('/payouts')
+  @Get('/api/v1/payouts')
   async getPayouts(): Promise<Array<Payout>> {
     return this.appService.getPayout();
   }
