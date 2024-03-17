@@ -6,10 +6,6 @@ import { mockTransactionResponse } from './mockData';
 
 @Injectable()
 export class AppService {
-  getHello(): string {
-    return 'Hello World!';
-  }
-
   async getUserAggregateById(
     userId: string,
     startDate: Date,
