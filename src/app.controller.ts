@@ -11,8 +11,8 @@ export class AppController {
     return this.appService.getHello();
   }
 
-  @Get('/users/:id')
-  getUserAggregate(@Param('id') userId: string): UserAggregate {
+  @Get('/users/:userId')
+  getUserAggregate(@Param('userId') userId: string): UserAggregate {
     return this.appService.getUserAggregate(userId);
   }
 }
