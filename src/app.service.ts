@@ -9,7 +9,7 @@ export class AppService {
     return 'Hello World!';
   }
 
-  getUserAggregate(userId: string): UserAggregate {
+  getUserAggregateById(userId: string): UserAggregate {
     let aggregate: UserAggregate = {
       userId: null,
       balance: 0,
@@ -46,7 +46,7 @@ export class AppService {
     return aggregate;
   }
 
-  async getPayout(): Promise<Array<Payout>> {
+  async getPayouts(): Promise<Array<Payout>> {
     const transactions = await this.getTransactions();
     const userPayouts: { [userId: string]: number } = {};
 

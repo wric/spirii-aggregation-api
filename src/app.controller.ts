@@ -14,7 +14,7 @@ export class AppController {
 
   @Get('/api/v1/users/:userId')
   getUserAggregate(@Param('userId') userId: string): UserAggregate {
-    const userAggregate = this.appService.getUserAggregate(userId);
+    const userAggregate = this.appService.getUserAggregateById(userId);
     if (userAggregate.userId === null) {
       throw new NotFoundException(`User ${userId} not found`);
     }
@@ -23,6 +23,6 @@ export class AppController {
 
   @Get('/api/v1/payouts')
   async getPayouts(): Promise<Array<Payout>> {
-    return this.appService.getPayout();
+    return this.appService.getPayouts();
   }
 }
