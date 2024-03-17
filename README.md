@@ -65,3 +65,8 @@ Response:
 ## Assumptions:
 
 - Can't increas page size to higher than 3
+- "Task 1: Get aggregated data by user Id: balance, earned, spent, payout, paid out" assuming "payout" and "paid out" is one.
+
+## TODO/Future improvements
+
+-
