@@ -1,5 +1,10 @@
 # Spirii
 
+To run:
+
+`npm install`
+`npm run start:dev`
+
 ## Goals
 
 1. Get aggregated data by user Id: balance, earned, spent, payout, paid out
@@ -16,7 +21,7 @@
 
 ## Transaction API
 
-`GET /transactions?startDate=2023-02-01 00:00:00&amp;endDate=2023-02-01 00:00:00`
+`GET /transactions?startDate=2023-02-01 00:00:00&endDate=2023-02-01 00:00:00`
 Response:
 
 ```json
@@ -58,13 +63,15 @@ Response:
 
 - Need readToEnd
 - Pre-conditions 1-3 might need cache (implement at last)
-- "Exchange rate is 1 SCR = 1 EUR". Uncertain about this. Nothing else points to currencys.
+- "Exchange rate is 1 SCR = 1 EUR". Uncertain about this. Nothing else points to currencies.
 - Seems to be only GET requst in aggregation API
 - Using NestJS typescript example project
 
 ## Assumptions:
 
-- Can't increas page size to higher than 3
+- Assuming Transaction API can't increas page size to higher than 1000
+- Assuming Transaction API has no support for filtering on userId or transaction type.
+- Assuming Transaction API has support for query ?page=X
 - "Task 1: Get aggregated data by user Id: balance, earned, spent, payout, paid out" assuming "payout" and "paid out" is one.
 - Task 2: as a first step I'm assuming that the entire liste is expected in response. Not paged.
 - Task 2: assuming that the number of payouts is not requested in the response

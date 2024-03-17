@@ -1,7 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { UserAggregate } from 'types/UserAggregate';
-import { Transaction, TransactionApiResponse } from 'types/TransactionApi';
 import { Payout } from 'types/Payout';
+import { Transaction, TransactionApiResponse } from 'types/TransactionApi';
+import { UserAggregate } from 'types/UserAggregate';
+import { mockTransactionResponse } from './mockData';
 
 @Injectable()
 export class AppService {
@@ -9,8 +10,12 @@ export class AppService {
     return 'Hello World!';
   }
 
-  async getUserAggregateById(userId: string): Promise<UserAggregate> {
-    const transactions = await this.getTransactions();
+  async getUserAggregateById(
+    userId: string,
+    startDate: Date,
+    endDate: Date,
+  ): Promise<UserAggregate> {
+    const transactions = await this.getTransactions(startDate, endDate);
     const aggregate: UserAggregate = {
       userId: null,
       balance: 0,
@@ -19,7 +24,7 @@ export class AppService {
       payout: 0,
     };
 
-    // TODO: improve perf with with index of array
+    // TODO: could improve perf with with index of array
     for (const transaction of transactions) {
       if (transaction.userId !== userId) {
         continue;
@@ -47,8 +52,8 @@ export class AppService {
     return aggregate;
   }
 
-  async getPayouts(): Promise<Array<Payout>> {
-    const transactions = await this.getTransactions();
+  async getPayouts(startDate: Date, endDate: Date): Promise<Array<Payout>> {
+    const transactions = await this.getTransactions(startDate, endDate);
     const userPayouts: { [userId: string]: number } = {};
 
     for (const transaction of transactions) {
@@ -70,41 +75,38 @@ export class AppService {
     return payouts;
   }
 
-  async getTransactions(): Promise<Array<Transaction>> {
-    const transactionApiResponse = mockTransactionResponse;
-    return transactionApiResponse.items;
+  async getTransactions(
+    startDate: Date,
+    endDate: Date,
+  ): Promise<Array<Transaction>> {
+    const apiPath =
+      '/transactions?' +
+      `?startDate=${startDate.toISOString().replace('T', ' ').substring(0, 19)}` +
+      `?endDate=${endDate.toISOString().replace('T', ' ').substring(0, 19)}` +
+      '&limit=1000';
+
+    const firstPage = await this.apiFetch(apiPath);
+    const allTransactions = firstPage.items;
+
+    const pagesPromises: Array<Promise<TransactionApiResponse>> = [];
+    for (let page = 2; page <= firstPage.meta.totalPages; page++) {
+      pagesPromises.push(this.apiFetch(apiPath + `&page=${page}`));
+    }
+
+    const pages = await Promise.all(pagesPromises);
+    for (const page of pages) {
+      allTransactions.push(...page.items);
+    }
+
+    // return allTransactions;
+    // Mock filtering on date here for simplicity
+    return allTransactions.filter((transaction) => {
+      const transactionDate = new Date(transaction.createdAt);
+      return transactionDate > startDate && transactionDate < endDate;
+    });
+  }
+
+  async apiFetch(_: string) {
+    return mockTransactionResponse;
   }
 }
-
-const mockTransactionResponse: TransactionApiResponse = {
-  items: [
-    {
-      id: '41bbdf81-735c-4aea-beb3-3e5f433a30c5',
-      userId: '074092',
-      createdAt: '2023-03-16T12:33:11.000Z',
-      type: 'payout',
-      amount: 30,
-    },
-    {
-      id: '41bbdf81-735c-4aea-beb3-3e5fasfsdfef',
-      userId: '074092',
-      createdAt: '2023-03-12T12:33:11.000Z',
-      type: 'spent',
-      amount: 12,
-    },
-    {
-      id: '41bbdf81-735c-4aea-beb3-342jhj234nj234',
-      userId: '074092',
-      createdAt: '2023-03-15T12:33:11.000Z',
-      type: 'earned',
-      amount: 1.2,
-    },
-  ],
-  meta: {
-    totalItems: 1200,
-    itemCount: 3,
-    itemsPerPage: 3,
-    totalPages: 400,
-    currentPage: 1,
-  },
-};
