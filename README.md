@@ -59,6 +59,8 @@ Response:
 - Need readToEnd
 - Pre-conditions 1-3 might need cache (implement at last)
 - "Exchange rate is 1 SCR = 1 EUR". Uncertain about this. Nothing else points to currencys.
+- Seems to be only GET requst in aggregation API
+- Using NestJS typescript example project
 
 ## Assumptions:
 
