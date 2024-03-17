@@ -8,10 +8,10 @@ export type Transaction = {
 
 type ResponseMetaData = {
   totalItems: number;
-  itemCount: 3;
-  itemsPerPage: 3;
-  totalPages: 400;
-  currentPage: 1;
+  itemCount: number;
+  itemsPerPage: number;
+  totalPages: number;
+  currentPage: number;
 };
 
 export type TransactionApiResponse = {
