@@ -4,7 +4,7 @@ To run:
 
 `npm install`
 
-`npm run start:dev`
+`npm run start`
 
 Test with:
 
