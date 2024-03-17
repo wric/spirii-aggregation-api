@@ -71,12 +71,12 @@ export class AppService {
   }
 
   async getTransactions(): Promise<Array<Transaction>> {
-    const transactionApiResponse = mockResUsers;
+    const transactionApiResponse = mockTransactionResponse;
     return transactionApiResponse.items;
   }
 }
 
-const mockResUsers: TransactionApiResponse = {
+const mockTransactionResponse: TransactionApiResponse = {
   items: [
     {
       id: '41bbdf81-735c-4aea-beb3-3e5f433a30c5',
