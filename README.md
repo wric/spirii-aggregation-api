@@ -5,6 +5,19 @@ To run:
 `npm install`
 `npm run start:dev`
 
+Test with:
+
+`http://localhost:3000/api/v1/users/074092?startDate=2023-03-01&endDate=2023-03-31`
+`http://localhost:3000/api/v1/payouts?startDate=2023-03-01&endDate=2023-03-31`
+
+Known limitations:
+
+- Error handling with proper error messages and status codes are not implemented.
+- The mocked Transaction API doesn't work (pagination, bad mock data, etc)
+- Throttle 5 req/min was not finnished (plan was to use p-throttle).
+- Cache to handle all request (max 2 min old data) is not implemented.
+- Tests are broken
+
 ## Goals
 
 1. Get aggregated data by user Id: balance, earned, spent, payout, paid out
@@ -73,7 +86,7 @@ Response:
 - Assuming Transaction API has no support for filtering on userId or transaction type.
 - Assuming Transaction API has support for query ?page=X
 - "Task 1: Get aggregated data by user Id: balance, earned, spent, payout, paid out" assuming "payout" and "paid out" is one.
-- Task 2: as a first step I'm assuming that the entire liste is expected in response. Not paged.
+- Task 2: as a first step I'm assuming that the entire lise is expected in response. Not paged.
 - Task 2: assuming that the number of payouts is not requested in the response
 
 ## TODO/Future improvements
