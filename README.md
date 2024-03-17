@@ -12,13 +12,21 @@ Test with:
 
 `http://localhost:3000/api/v1/payouts?startDate=2023-03-01&endDate=2023-03-31`
 
-Known limitations:
+#### Known limitations:
 
 - Error handling with proper error messages and status codes are not implemented.
 - The mocked Transaction API doesn't work (pagination, bad mock data, etc)
 - Throttle 5 req/min was not finnished (plan was to use [p-throttle](https://www.npmjs.com/package/p-throttle) that I have used previously with success).
 - Cache to handle all request (max 2 min old data) is not implemented. Plan was to use p-throttle similar [p-memoize](https://github.com/sindresorhus/p-memoize), due to similarity in api.
 - Tests are broken.
+
+#### Testing approach:
+
+In hindsight, I should have created a much better mock data that simulates the cases asked for in the tasks. Then, before writing the code, create the test cases for the main flows and request. These should act as my target. Along the way as I found find special cases and new boundariece that are not easily understood from just the task description i would add a test for it. At this point it doesnt event need to run, just the name of the test (that should always describe the testa case as clear as possible) i enought. I prefer not to jump on each edge case test right away, instead focus on the main task/flows. The main tests guides the development, and help to focus on the larger task. The edge cases are first handled when the main cases are done.
+
+We should also not only add test for the happy path. But in a MVP it's important to balance and prioritize the test efforts. With focus on good error handling with error messages, logging, etc, you can help the consumer of the API to understand the issue.
+
+Consuming an external API (as with the transactions) brings some challenges. We don't own it, but we depend on it. Our api will fail if that API goes down, or changes behaivors. Might not be a part of TDD, but important to consider, and mayby add som end to end test. Also, an API with large number of requests will probably grow quickly in data size and get to volumes that are not easily tested. Some load testing is always good for QA.
 
 ## Goals
 
