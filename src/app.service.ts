@@ -11,7 +11,7 @@ export class AppService {
 
   getUserAggregate(userId: string): UserAggregate {
     let aggregate: UserAggregate = {
-      userId: userId,
+      userId: null,
       balance: 0,
       earned: 0,
       spent: 0,
@@ -23,6 +23,8 @@ export class AppService {
       if (transaction.userId !== userId) {
         continue;
       }
+
+      aggregate.userId = transaction.userId;
 
       switch (transaction.type) {
         case 'earned':

@@ -1,7 +1,7 @@
-import { Controller, Get, Param } from '@nestjs/common';
-import { AppService } from './app.service';
-import { UserAggregate } from 'types/UserAggregate';
+import { Controller, Get, NotFoundException, Param } from '@nestjs/common';
 import { Payout } from 'types/Payout';
+import { UserAggregate } from 'types/UserAggregate';
+import { AppService } from './app.service';
 
 @Controller()
 export class AppController {
@@ -14,7 +14,11 @@ export class AppController {
 
   @Get('/api/v1/users/:userId')
   getUserAggregate(@Param('userId') userId: string): UserAggregate {
-    return this.appService.getUserAggregate(userId);
+    const userAggregate = this.appService.getUserAggregate(userId);
+    if (userAggregate.userId === null) {
+      throw new NotFoundException(`User ${userId} not found`);
+    }
+    return userAggregate;
   }
 
   @Get('/api/v1/payouts')
