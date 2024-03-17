@@ -13,9 +13,13 @@ describe('AppController', () => {
   });
 
   describe('getHello', () => {
-    it('should return "Hello World!"', () => {
+    it('should return "Hello World!"', async () => {
       const appController = app.get(AppController);
-      expect(appController.getHello()).toBe('Hello World!');
+      const payouts = await appController.getPayouts(
+        '2023-03-01',
+        '2023-03-31',
+      );
+      expect(payouts).toHaveLength(5);
     });
   });
 });
